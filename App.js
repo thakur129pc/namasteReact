@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 // import noData, { data } from "./imp";
 import About from "./About";
-import Yes from "./Yes";
+const Yes = lazy(() => import("./Yes"));
 import { Error } from "./Error";
 import {
   // BrowserRouter,
@@ -13,6 +13,7 @@ import {
   Outlet,
   Link,
 } from "react-router-dom";
+import Data from "./Data";
 
 const rootEL = document.getElementById("root");
 
@@ -45,7 +46,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/yes",
-        element: <Yes />,
+        element: (
+          <Suspense fallback={<div>Hello</div>}>
+            <Yes />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/data/:id/:name",
+        element: <Data />,
       },
     ],
   },
