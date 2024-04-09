@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 // import noData, { data } from "./imp";
 import About from "./About";
+import myContext from "./myContext";
 const Yes = lazy(() => import("./Yes"));
 import { Error } from "./Error";
 import {
@@ -25,12 +26,15 @@ const rootEL = document.getElementById("root");
 // ]);
 // Functional Component
 const FunComp = ({ pass }) => {
+  const [data, setData] = useState("Nitin");
   return (
-    <div>
-      {pass}
-      <Link to="/about">To about</Link>
-      <Outlet />
-    </div>
+    <myContext.Provider value={{ appData: data, setData }}>
+      <div>
+        {pass}
+        <Link to="/about">To about</Link>
+        <Outlet data={data} />
+      </div>
+    </myContext.Provider>
   );
 };
 
